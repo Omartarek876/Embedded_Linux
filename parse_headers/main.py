@@ -1,6 +1,21 @@
+
+"""
+==============================================================================
+Script Name   : parse_header_file.py
+Author        : Omar Tarek
+Date Created  : September 4, 2024
+Description   : This script parses a C header file to extract function 
+                prototypes, global variable declarations, macros, and 
+                include statements. The results are saved in an Excel 
+                workbook with separate sheets for each category.
+==============================================================================
+"""
+
 import openpyxl
 import re
 import os
+from openpyxl.styles import PatternFill
+
 
 def parse_hf(header_path):
     with open(header_path, "r") as file:
@@ -65,9 +80,15 @@ def create_excel(out_file):
     # Adjust the column width
     for sheet in [functions_sheet] + list(sheets.values()):
         sheet.column_dimensions['A'].width = 10
-        sheet.column_dimensions['B'].width = 50
+        set
+        sheet.column_dimensions['B'].width = 70
 
     return functions_sheet, sheets, workbook
+
+def set_column_color(sheet, column_letter, color):
+    fill = PatternFill(start_color=color, end_color=color, fill_type="solid")
+    for cell in sheet[column_letter]:
+        cell.fill = fill
 
 def header_path():
     while True:
@@ -96,6 +117,19 @@ def main():
     append_data(sheets['Global Variables'], data['global_variable_pattern'], "Global Variable Declaration")
     append_data(sheets['Macros'], data['macro_pattern'], "Macro Definition")
     append_data(sheets['Includes'], data['include_pattern'], "Include Statement")
+    
+
+    # Set the color of the first column (ID) to yellow for all sheets
+    set_column_color(functions_sheet, 'A', 'FFFF00')  # Yellow
+    set_column_color(sheets['Global Variables'], 'A', 'FFFF00')  # Yellow
+    set_column_color(sheets['Macros'], 'A', 'FFFF00')  # Yellow
+    set_column_color(sheets['Includes'], 'A', 'FFFF00')  # Yellow 
+
+    # Set the color of the first column (ID) to yellow for all sheets
+    set_column_color(functions_sheet, 'B', 'ADD8E6')  # Yellow
+    set_column_color(sheets['Global Variables'], 'B', 'ADD8E6')  # Yellow
+    set_column_color(sheets['Macros'], 'B', 'ADD8E6')  # Yellow
+    set_column_color(sheets['Includes'], 'B', 'ADD8E6')  # Yellow
 
     workbook.save(out_file)  # Save the workbook with the user-provided file name
     print("Done")

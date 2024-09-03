@@ -5,12 +5,10 @@
  *      Author: Omar Tarek
  */
 
-#ifndef INC_MINES_DETECTOR_H
-#define INC_MINES_DETECTOR_H
 
-#include "StdTypes.h"  // Include for standard types
-#include "Dio.h"       // Include for Digital I/O functionality
-#include "Registers.h" // Include for register definitions
+#include "D:\courses\Embedded_Systems\Full_projects\07-Mines_Detector_Robot\StdTypes.h"  // Include for standard types
+#include "D:\courses\Embedded_Systems\Full_projects\07-Mines_Detector_Robot\Dio.h"       // Include for Digital I/O functionality
+#include "D:\courses\Embedded_Systems\Full_projects\07-Mines_Detector_Robot\Registers.h" // Include for register definitions
 
 extern u16 Timer_Counter; // External variable for timer counter
 extern u8 Detected_Mine;  // External variable for detected mine
@@ -52,5 +50,3 @@ void Car_Draft(void);                             // Function prototype for car 
 
 #define IR     DIO_PORTC, DIO_PIN0                // Macro definition for IR pin
 #define BUZZ   DIO_PORTD, DIO_PIN7                // Macro definition for BUZZ pin
-
-#endif /* INC_MINES_DETECTOR_H */
