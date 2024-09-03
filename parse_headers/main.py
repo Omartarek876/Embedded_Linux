@@ -11,24 +11,11 @@ def parse_hf(header_path):
         'function_pattern': re.compile(r'\b[A-Za-z_][A-Za-z0-9_]*\s+\**\b[A-Za-z_][A-Za-z0-9_]*\s*\([^)]*\)\s*;'),
         'global_variable_pattern': re.compile(r'\b(?:extern\s+)?[A-Za-z_][A-Za-z0-9_]*\s+\**\b[A-Za-z_][A-Za-z0-9_]*\s*(?:=\s*[^;]+)?\s*;'),
         'macro_pattern': re.compile(r'#define\s+\w+\s+.+'),
-        'include_pattern': re.compile(r'#include\s*[<"]\S*[>"]'),
-        'typedef_pattern': re.compile(r'typedef\s+.*\s+\w+\s*;'),
-        'struct_pattern': re.compile(r'struct\s+\w+\s*\{[^}]*\}\s*;'),
-        'enum_pattern': re.compile(r'enum\s+\w*\s*\{([^}]*)\}\s*;'),
-        'function_like_macro_pattern': re.compile(r'#define\s+\w+\(.*?\)\s+.+')
+        'include_pattern': re.compile(r'#include\s*[<"]\S*[>"]')
     }
 
     # Extract data for each pattern
     data = {name: pattern.findall(content) for name, pattern in patterns.items()}
-
-    # Extract enum names and their values
-    enums = patterns['enum_pattern'].findall(content)
-    enum_names = []
-    for enum in enums:
-        # Split by commas and strip spaces to get individual enum values
-        values = [val.strip() for val in enum.split(',') if val.strip()]
-        enum_names.extend(values)
-    data['enum_pattern'] = enum_names
 
     return data
 
@@ -72,11 +59,7 @@ def create_excel(out_file):
     sheets = {
         'Global Variables': workbook.create_sheet(title="Global Variables"),
         'Macros': workbook.create_sheet(title="Macros"),
-        'Includes': workbook.create_sheet(title="Includes"),
-        'Typedefs': workbook.create_sheet(title="Typedefs"),
-        'Structs': workbook.create_sheet(title="Structs"),
-        'Enums': workbook.create_sheet(title="Enums"),
-        'Function-Like Macros': workbook.create_sheet(title="Function-Like Macros")
+        'Includes': workbook.create_sheet(title="Includes")
     }
 
     # Adjust the column width
@@ -113,10 +96,6 @@ def main():
     append_data(sheets['Global Variables'], data['global_variable_pattern'], "Global Variable Declaration")
     append_data(sheets['Macros'], data['macro_pattern'], "Macro Definition")
     append_data(sheets['Includes'], data['include_pattern'], "Include Statement")
-    append_data(sheets['Typedefs'], data['typedef_pattern'], "Typedef Declaration")
-    append_data(sheets['Structs'], data['struct_pattern'], "Struct Declaration")
-    append_data(sheets['Enums'], data['enum_pattern'], "Enum Declaration")
-    append_data(sheets['Function-Like Macros'], data['function_like_macro_pattern'], "Function-Like Macro")
 
     workbook.save(out_file)  # Save the workbook with the user-provided file name
     print("Done")
