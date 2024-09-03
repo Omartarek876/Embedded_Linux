@@ -14,3 +14,5 @@ for line in data:
 
 # Print the final list of words
 print(words)
+
+file.close()
