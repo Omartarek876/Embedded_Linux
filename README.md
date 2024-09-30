@@ -35,7 +35,7 @@ Feel free to open an issue or submit a pull request if you have any improvements
 ## Contact
 
 - **Name**: Omar Tarek Ibrahim
-- **Email**: omar.tarek876@gmail.com
+- **Email**: omarrtarek74@gmail.com
 - **LinkedIn**: [Omar Tarek](https://www.linkedin.com/in/omar-tarek-495ba6217)
 
 ---
